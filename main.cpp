@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstddef>
 
 void destroy(int ** mtx, size_t created)
 { 
@@ -31,13 +32,38 @@ int ** create(size_t rows, size_t cols)
    }
 }
 
+ void construct(int ** mtx, int init, size_t rows,size_t cols)
+{
+    for (size_t i=0; i<rows; ++i)
+    {
+        for (size_t j=0; j<rows; ++j)
+        {
+            mtx[i][j]=init;
+        }
+
+    }
+    
+}
+
+
 int main()
 {
+  size_t r=0;
+  size_t c = 0;
+  std::cin>>r>>c;
+
+  if (!std::cin)
+  {
+    std::cerr<<"Bad Input\n";
+    return 2;
+
+  }
+
   int ** matrix = nullptr;
 
   try 
   {                 
-    matrix = create(5, 5);
+    matrix = create(r, c);
   }
 
   catch (const std::bad_alloc & e) 
@@ -45,6 +71,8 @@ int main()
     std::cerr << e.what() << "\n"; 
     return 1;
   }
-  
+
+  construct(matrix, 2, 5, 5);
+  std::cout << matrix[0][0];
   destroy(matrix, 5);
 }
